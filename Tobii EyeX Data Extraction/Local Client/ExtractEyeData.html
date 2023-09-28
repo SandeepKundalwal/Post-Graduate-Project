@@ -1,0 +1,66 @@
+<html>
+    <title>state machine gaze webtracker test</title>
+    <head>
+        <script type="text/javascript" src="./js/TobiiWeb_Client.js"></script>
+    </head>
+    <body style="margin:0px">
+        <button id="startButton" onclick="startTracking()">Start Tracking</button>
+        <button id="stopButton" onclick="stopTracking()" disabled>Stop Tracking and Save</button>
+        
+        <script>
+            let trackingData = [];
+
+            function startTracking(){
+                document.getElementById('startButton').disabled = true;
+                document.getElementById('stopButton').disabled = false;
+                TobiiWeb_Client.start({
+                    enable_state_machine_logs : true, 
+                    use_filter : "mean", 
+                    services : [
+                        {name : "GazeTracking_Service", page_url : window.location.href}
+                    ],
+                    onMessage : {
+                        "GazeTracking_Service" : GazeCoordinatesReceiver({
+                            filter: "mean",
+                            filter_size: 5,
+                            onGazeCoordinates: function(x,y){
+                                // console.log(x + " " + y);
+                                const timestamp = new Date().getTime();
+                                let datetimestamp = new Date().toISOString();
+                                trackingData.push({ x_axis: x, y_axis: y, timestamp: timestamp, datetimestamp : datetimestamp });
+                            }
+                        })
+                    }
+                });
+            }
+
+            function stopTracking() {
+                TobiiWeb_Client.stop()
+                document.getElementById('stopButton').disabled = true;
+                saveTrackingData();
+            }
+
+            function saveTrackingData() {
+                const trackingDataStr = trackingData.map(data => 
+                    `${data.timestamp}, ${data.datetimestamp}, ${data.x_axis}, ${data.y_axis}`
+                    ).join('\n');
+
+                const blob = new Blob([trackingDataStr], { type: 'text/plain' });
+
+                // link element
+                const a = document.createElement('a');
+                a.download = 'trackingData.txt';
+
+                // Create a URL for the blob and set it as the href attribute
+                a.href = window.URL.createObjectURL(blob);
+                
+                document.body.appendChild(a);
+                // trigger the download
+                
+                a.click();
+                document.body.removeChild(a);
+        }
+            
+        </script>
+    </body>
+</html>    
