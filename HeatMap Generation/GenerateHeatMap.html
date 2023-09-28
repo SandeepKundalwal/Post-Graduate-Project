@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Image Heatmap Overlay | heatmap.js</title>
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; }
+    body { font-family: sans-serif; }
+    #imageContainer { position: relative; width: 100%; height: 100%; }
+    #heatmapContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    img { max-width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 0; }
+  </style>
+</head>
+<body>
+  <div id="imageContainer">
+    <img src="images/heatmap.png" alt="Your Image" id="overlayImage">
+    <div id="heatmapContainer"></div>
+  </div>
+  <script src="js/heatmap.js"></script>
+  <script src="js/svg-area-heatmap.js"></script>
+  <script>
+    var textFilePath = 'trackingData.txt';
+
+    // Create a heatmap instance
+    var heatmap = h337.create({
+      container: document.getElementById('heatmapContainer'),
+      radius: 20
+    });
+
+    // Fetch the text file and process the coordinate data
+    fetch(textFilePath)
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (coordinateData) {
+        var dataPoints = [];
+
+        var lines = coordinateData.trim().split('\n');
+        lines.forEach(function (line) {
+          var parts = line.split(',');
+          if (parts.length === 4) {
+            var x = parseFloat(parts[2]);
+            var y = parseFloat(parts[3]);
+            // console.log(x + " " + y);
+            if (!isNaN(x) && !isNaN(y)) {
+              dataPoints.push({ x: x, y: y, value: 100 });
+            }
+          }
+        });
+
+        heatmap.addData(dataPoints);
+      })
+      .catch(function (error) {
+        console.error('Error fetching the text file:', error);
+      });
+  </script>
+</body>
+</html>
