@@ -1,5 +1,5 @@
 <html>
-    <title>state machine gaze webtracker test</title>
+    <title>sTobii EyeX</title>
     <head>
         <script type="text/javascript" src="./js/TobiiWeb_Client.js"></script>
     </head>
@@ -25,9 +25,9 @@
                             filter_size: 5,
                             onGazeCoordinates: function(x,y){
                                 // console.log(x + " " + y);
-                                const timestamp = new Date().getTime();
-                                let datetimestamp = new Date().toISOString();
-                                trackingData.push({ x_axis: x, y_axis: y, timestamp: timestamp, datetimestamp : datetimestamp });
+                                const timeStamp = new Date().getTime();
+                                const dateTimeStamp = new Date().toISOString();
+                                trackingData.push({ x_axis: x, y_axis: y, timestamp: timeStamp, datetimestamp : dateTimeStamp });
                             }
                         })
                     }
@@ -54,13 +54,10 @@
                 // Create a URL for the blob and set it as the href attribute
                 a.href = window.URL.createObjectURL(blob);
                 
-                document.body.appendChild(a);
-                // trigger the download
-                
+                document.body.appendChild(a);                
                 a.click();
                 document.body.removeChild(a);
         }
-            
         </script>
     </body>
 </html>    
