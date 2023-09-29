@@ -1,4 +1,4 @@
-<h1><img src="https://github.com/SandeepKundalwal/Post-Graduate-Project/assets/61798659/0fb6e767-b7d9-4d14-9692-a5dac7e51e96" width="45px"> &nbsp;Post Graduate Project @Indian Institute Of Technology, Mandi</h1>
+<h1><img src="https://github.com/SandeepKundalwal/Post-Graduate-Project/assets/61798659/0fb6e767-b7d9-4d14-9692-a5dac7e51e96" width="45px"> &nbsp;Post Graduate Project @IIT, Mandi</h1>
 
 <h2>Investigating User Behaviour Towards Phishing Mail Using Eye Gaze Data.</h2>
 <h4>Modules:</h4>
