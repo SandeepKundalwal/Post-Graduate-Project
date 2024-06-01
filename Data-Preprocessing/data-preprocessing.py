@@ -8,6 +8,7 @@ import openpyxl, os
 # else -> 5
 def label_row(x, y, sender_address_bbox, date_bbox, subject_bbox, body_bbox):
     x, y = float(x) + 20, float(y) - 120
+    # x, y = float(x), float(y)
 
     if sender_address_bbox[0] <= x <= sender_address_bbox[1] and sender_address_bbox[2] >= y <= sender_address_bbox[3]:
         return '1'
@@ -46,8 +47,8 @@ def process_text_file(input_file, output_excel):
 # process_text_file('1.txt', 'output.xlsx')
 
 if __name__=="__main__": 
-    directory_url = 'C:\\Users\\DELL\\Desktop\\Data-Collection\\GPT-50\\T23023\\eye-data\\text'
-    excel_directory_url = 'C:\\Users\\DELL\\Desktop\\Data-Collection\\GPT-50\\T23023\\eye-data\\excel\\'
+    directory_url = 'C:\\Users\\DELL\\Desktop\\Data-Collection\\GPT-50\\B21236\\eye-data\\text'
+    excel_directory_url = 'C:\\Users\\DELL\\Desktop\\Data-Collection\\GPT-50\\B21236\\eye-data\\excel\\all-emails\\'
     directory = os.fsencode(directory_url)
 
     for file in os.listdir(directory):
